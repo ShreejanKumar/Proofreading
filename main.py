@@ -27,6 +27,7 @@ def get_response(chapter):
 4) Final Checks and Coordination: Conduct final checks for consistency, conciseness, and clarity. Apply consistent orthography and capitalization rules. Ensure correct dialogue formatting, including proper use of quotation marks and ellipses for trailing speech. Provide the edited text directly without any additional comments or suggestions.
 5) Make as little changes as you can. It is important to preserve the writing style of the author.
 6) Keep the length of the text same as original. No need to summarize or shorten it.
+7) Write years and dates as numerals in 'dd month yyyy' format. Use no apostrophe for decades like '1990s'. For abbreviated decades, use a single close quote as in '90s'.
 
 Here is the Chapter text: <<ChapterText>>
 """
