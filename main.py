@@ -6,6 +6,7 @@ from IPython.display import Markdown
 import difflib
 import nltk
 import streamlit as st
+from difflib import SequenceMatcher
 
 
 # Ensure NLTK downloads 'punkt' properly
@@ -80,6 +81,8 @@ def save_html_file(file_path, content):
         file.write(content)
 
 
+def similarity_ratio(original, edited):
+    return SequenceMatcher(None, original, edited).ratio()
 
 
 

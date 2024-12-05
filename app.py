@@ -1,6 +1,6 @@
 import streamlit as st
 import nltk
-from main import get_response, html_comparison, load_html_file, save_html_file
+from main import get_response, html_comparison, load_html_file, save_html_file, similarity_ratio
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -114,6 +114,10 @@ if st.session_state['authenticated'] and not st.session_state['reset_mode']:
             # Get response from proofreading API
             response = get_response(chapter_text)
             
+            similarity = similarity_ratio(chapter_text, response)
+            # st.write(similarity)
+            if (similarity<50.0):
+                response = get_response(chapter_text+"Make fewer changes")
             # Display the response (proofread text)
             st.markdown("### Proofread Text")
             st.text_area('Proofread Output:', response, height=300)
