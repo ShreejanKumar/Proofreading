@@ -22,12 +22,14 @@ def get_response(chapter):
   model = genai.GenerativeModel('gemini-1.5-flash')
   prompt_template = """ I have a manuscript that needs thorough editing. Please perform the following tasks on the text provided:
 
-1) Copy-Editing and Line Editing: Correct any spelling, grammatical, and capitalization errors. Fix repetitive word usage and correct any inappropriate word choices. Fix punctuation errors, ensuring correct use of commas, semicolons, and other punctuation marks. Verify factual information and correct as necessary.
-2) Proofreading: Ensure the text is free from stylistic issues that might affect readability. Maintain consistent layout, typography, and spacing. Correct any errors in captioning and ensure the correct use of bold and italics.
-3) Final Checks and Coordination: Apply consistent orthography and capitalization rules. Ensure correct dialogue formatting, including proper use of quotation marks and ellipses for trailing speech. Provide the edited text directly without any additional comments or suggestions.
-4) Make as little changes as you can. It is important to preserve the writing style of the author.
-5) Keep the length of the text same as original. No need to summarize or shorten it.
-6) Write years and dates as numerals in 'dd month yyyy' format. Use no apostrophe for decades like '1990s'. For abbreviated decades, use a single close quote as in '90s'.
+1) Copy-Editing and Line Editing: Correct any spelling, grammatical, and capitalization errors. Fix repetitive word usage and correct any inappropriate word choices.
+2) Fix punctuation errors, ensuring correct use of commas, semicolons, and other punctuation marks. Verify factual information and correct as necessary.
+3) Fix any inconsistencies in tenses of the words used and dont make any unnecessary changes in the phrases used by the author.
+4) Proofreading: Ensure the text is free from stylistic issues. Maintain consistent layout, typography, and spacing. Correct any errors in captioning and ensure the correct use of bold and italics.
+5) Final Checks and Coordination: Apply consistent orthography and capitalization rules. Ensure correct dialogue formatting, including proper use of quotation marks and ellipses for trailing speech. Provide the edited text directly without any additional comments or suggestions.
+6) Make as little changes as you can. It is important to preserve the writing style of the author.
+7) Keep the length of the text same as original. No need to summarize or shorten it.
+8) Write years and dates as numerals in 'dd month yyyy' format. Use no apostrophe for decades like '1990s'. For abbreviated decades, use a single close quote as in '90s'.
 
 Here is the Chapter text: <<ChapterText>>
 """
