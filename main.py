@@ -15,6 +15,10 @@ nltk.download('punkt')
 
 def get_response(chapter):
   
+  # Set up Gemini API
+    
+  # genai.configure(api_key='AIzaSyB4wOYqbnQ0UynxmCWua17tlY78j9sx7IU')
+  
   # # Set up Gemini model and prompt
   # model = genai.GenerativeModel('gemini-1.5-flash')
   api_key =  st.secrets["Openai_api"]
@@ -25,36 +29,149 @@ def get_response(chapter):
   
   # Set up OpenAI model and prompt
   model="gpt-4o-mini-2024-07-18"
-  prompt_template = """ I have a manuscript that needs thorough editing. Please perform the following tasks on the text provided:
+  prompt_1 = """ I have a manuscript that needs thorough editing. Please perform the following tasks on the text provided:
 
-1) Copy-Editing and Line Editing: Correct any spelling, grammatical, and capitalization errors. Fix repetitive word usage and correct any inappropriate word choices.
-2) Fix all punctuation errors, ensuring correct use of commas, semicolons, colons, periods, quotation marks, and other punctuation marks.
-3) Fix any inconsistencies in tenses of the words used and dont make any unnecessary changes in the phrases used by the author.
-4) Proofreading: Ensure the text is free from stylistic issues. Maintain consistent layout, typography, and spacing. Correct any errors in captioning and ensure the correct use of bold and italics.
-5) Final Checks and Coordination: Apply consistent orthography and capitalization rules. Ensure correct dialogue formatting, including proper use of quotation marks and ellipses for trailing speech. Provide the edited text directly without any additional comments or suggestions.
-6) Make as little changes as you can. It is important to preserve the writing style of the author.
-7) Keep the length of the text same as original. No need to summarize or shorten it.
-8) Write years and dates as numerals in 'dd month yyyy' format. Use no apostrophe for decades like '1990s'. For abbreviated decades, use a single close quote as in '90s'.
-9) Insert em dashes where appropriate, in place of commas, colons, or parentheses. They can be used to emphasize or draw attention to material, or to set off additional information. Eg: “Of course you have a point,” Mabel murmured. “That is—I suppose it is concerning.” Here it represents hesitation.
-10) Preserve correctly hyphenated words (e.g., "south-east Asia") and avoid unnecessary changes to hyphenation. Do not alter hyphenated terms that are correctly used.
+1) Copy-Editing and Line Editing:
+
+- Correct all spelling, grammatical, and capitalization errors. Use British English spellings unless otherwise specified.
+Example: Use "analyse" not "analyze"; "organisation" not "organization."
+- Fix repetitive word usage and improve word choices while preserving the original meaning.
+Example: Replace "comprise of" with "comprise."
+- Ensure proper arrangement of adjectives: opinion > size > age > shape > color > origin > material > purpose.
+Example: "A beautiful large antique wooden dining table."
+
+2)Punctuation:
+
+- Use Oxford commas in lists.
+Example: "I bought apples, oranges, and bananas."
+- Apply em dashes (—) for emphasis or parenthetical clauses.
+Example: "She had one goal—to succeed."
+- Use en dashes (–) for number ranges or reciprocal relationships.
+Example: "1914–18 war" or "Mumbai–Pune highway."
+- Write ellipses as three dots separated by spaces: . . .
+Example: "I was thinking . . . but stopped."
+- Use single quotes (‘ ’) for direct speech and double quotes (“ ”) for quotes within quotes.
+Example: ‘He said, “This is important.”’
+- Place punctuation correctly inside or outside quotation marks:
+Example (full sentence): ‘She said, “This is perfect.”’
+Example (partial): She described it as ‘perfect’.
+
+3) Consistency in Style:
+
+Follow these capitalization rules:
+- Titles: "President of the United States" but "the president of a company."
+Geographical regions: "North-eastern states" but "north-east direction."
+- Italicize:
+Non-OED vernacular/local words (on first use only): dal, naan.
+Titles of books, films, and newspapers: Pride and Prejudice, the Times of India.
+- Maintain correct hyphenation:
+Example: "north-east" but "North-eastern states."
+- Write dates in the format "dd month yyyy." Use no apostrophe for decades like '1990s'. For abbreviated decades, use a single close quote as in '90s'.
+Example: "15 August 1947."
+- Spell out numbers from zero to ninety-nine, and use numerals for numbers above 100.
+Example: "Seventy-five" but "125."
+
+4) Proofreading:
+
+- Eliminate non-sequiturs:
+Example: Incorrect: "He lived in Delhi, was tall, and drove a car." Correct: "He was tall, lived in Delhi, and drove a car."
+- Avoid dangling modifiers:
+Example: Incorrect: "Handing me the book, his smile widened." Correct: "As he handed me the book, his smile widened."
+- Remove stylistic issues or mixed metaphors:
+Example: Incorrect: "Virgin territory pregnant with possibilities." Correct: "Unexplored territory full of potential."
+- Fix any inconsistencies in tenses of the words used and dont make any unnecessary changes in the phrases used by the author.
+
+5) Apply these rules to the text and provide the corrected version without additional comments or suggestions. 
+6) Make sure you make minimal changes to the text and dont change the authors writing style. Ensure the length of the text remains the same.
 Here is the Chapter text: <<ChapterText>>
 """
-  prompt = prompt_template.replace('<<ChapterText>>', chapter)
+  prompt1 = prompt_1.replace('<<ChapterText>>', chapter)
   # response = model.generate_content(prompt)
 
   # return response.text
-  chat_completion = client.chat.completions.create(
+  chat_completion1 = client.chat.completions.create(
         messages=[
             {
                 "role": "user",
-                "content": prompt,
+                "content": prompt1,
             }
         ],
         model=model,
 	temperature = 0
     )
 
-  response = chat_completion.choices[0].message.content
+  response1 = chat_completion1.choices[0].message.content
+
+  prompt_2 = """ I have a manuscript that needs thorough editing. Please perform the following tasks on the text provided:
+
+1) Dialogue and Quotation:
+
+- Use proper dialogue formatting:
+Example: ‘He said, “I will join you tomorrow.”’
+- Format trailing speech with ellipses:
+Example: "I’m not sure . . ."
+- Place punctuation correctly within or outside quotes:
+Example (full sentence): ‘She said, “This is wonderful.”’
+Example (phrase): He referred to it as ‘amazing’.
+
+2) Acronyms and Abbreviations:
+
+- Spell out acronyms upon first use:
+Example: "National Aeronautics and Space Administration (NASA)" initially, then "NASA."
+- Use stops for abbreviated names but not acronyms:
+Example: "A.P.J. Abdul Kalam" but "NASA."
+- Use stops for "e.g.", "i.e.", but not for measurements like "7 cm."
+
+3) Bias and Legal Compliance:
+
+- Remove gender or regional bias. Use neutral language:
+Example: Replace "chairman" with "chairperson."
+- Flag potentially libelous statements or those with harmful stereotypes.
+
+4) Apply Advanced Style Guide Rules:
+
+- Correct commonly misused words:
+Example: Use "affect" (verb) for "influence" and "effect" (noun) for "result."
+Use "stationery" (writing materials) instead of "stationary" (not moving).
+- Maintain British spelling conventions:
+Example: "Programme" not "program" (except "computer program").
+- Use correct forms of commonly confused terms:
+Example: "Licence" (noun) vs. "license" (verb).
+
+5) Place Names and Standardization:
+
+- Use updated place names unless in historical context:
+Example: "Mumbai" not "Bombay"; "Kolkata" not "Calcutta."
+- Ensure proper capitalization for regions and entities:
+Example: "South Asia" but "southward direction."
+
+6) Headlines and Titles:
+
+- Follow these capitalization rules:
+Capitalize nouns, verbs, and pronouns.
+- Lowercase prepositions, conjunctions, and articles unless the first word.
+Example: "The Rise and Fall of Empires."
+
+7) Apply these rules to the text and provide the corrected version without additional comments or suggestions. 
+8) Make sure you make minimal changes to the text and dont change the authors writing style. Ensure the length of the text remains the same.
+Here is the Chapter text: <<ChapterText>>
+"""
+  prompt2 = prompt_2.replace('<<ChapterText>>', response1)
+  # response = model.generate_content(prompt)
+
+  # return response.text
+  chat_completion2 = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": prompt2,
+            }
+        ],
+        model=model,
+	temperature = 0
+    )
+
+  response = chat_completion2.choices[0].message.content
   return response
 
 def split_into_sentences(text):
